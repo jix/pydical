@@ -89,4 +89,6 @@ pybind11_add_module(pydical
     ${CADICAL_SRC}
 )
 
+target_include_directories(pydical PRIVATE cadical/src)
+
 set_property(TARGET pydical PROPERTY CXX_STANDARD 17)
