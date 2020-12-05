@@ -382,4 +382,8 @@ PYBIND11_MODULE(pydical, m) {
 #else
   m.attr("__version__") = "dev";
 #endif
+
+  m.attr("UNSOLVED") = 0;
+  m.attr("SATISFIABLE") = 10;
+  m.attr("UNSATISFIABLE") = 20;
 }
