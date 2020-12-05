@@ -10,6 +10,23 @@ print("c generating random instance")
 
 clauses = []
 
+learned = []
+
+
+def should_learn(length):
+    learned.clear()
+    return length <= 2
+
+
+def do_learn(lit):
+    if lit:
+        learned.append(lit)
+    else:
+        print("c learned small clause", *learned, 0)
+
+
+s.connect_learner(should_learn, do_learn)
+
 while s.solve() == SATISFIABLE:
     vars = random.choices(range(1, N + 1), k=k)
     lits = [var * random.choice((-1, 1)) for var in vars]
