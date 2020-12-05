@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.4)
+cmake_minimum_required(VERSION 3.12)
 
 project(pydical)
 
@@ -76,6 +76,10 @@ set(CADICAL_SRC
     cadical/src/watch.cpp
 )
 
+set(PYEXT_SRC
+    src/main.cpp
+)
+
 file(STRINGS "cadical/VERSION" CADICAL_VERSION)
 
 set_property(
@@ -85,8 +89,14 @@ set_property(
 )
 
 pybind11_add_module(pydical
-    src/main.cpp
+    ${PYEXT_SRC}
     ${CADICAL_SRC}
+)
+
+set_property(
+    SOURCE ${PYEXT_SRC}
+    PROPERTY COMPILE_DEFINITIONS
+    VERSION_INFO="${PYDICAL_VERSION_INFO}"
 )
 
 target_include_directories(pydical PRIVATE cadical/src)
