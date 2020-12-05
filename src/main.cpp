@@ -332,6 +332,9 @@ PYBIND11_MODULE(pydical, m) {
     self.traverse_witnesses_forward(it);
     return it.clauses;
   });
+#if 0
+// There doesn't seem to be a way to pass a FILE * from python, but there
+// overloads below accept file paths, so this isn't essential.
   cls.def("read_dimacs",
       [](Solver &self, FILE *file, const char *name, int strict) {
         int vars = -1;
@@ -343,6 +346,7 @@ PYBIND11_MODULE(pydical, m) {
     const char *msg = self.read_dimacs(file, name, vars, 1);
     return std::make_pair(msg, vars);
   });
+#endif
   cls.def("read_dimacs", [](Solver &self, const char *name, int strict) {
     int vars = -1;
     const char *msg = self.read_dimacs(name, vars, strict);
@@ -371,8 +375,7 @@ PYBIND11_MODULE(pydical, m) {
   cls.def("write_dimacs",
       [](Solver &self, const char *path) { return self.write_dimacs(path); });
   cls.def("write_extension", &Solver::write_extension);
-  cls.def_static("build", &Solver::build);
-  cls.def_static("build", [](py::object, FILE *file) { Solver::build(file); });
+  // Skipping the build function, as it only supports output to stdout or stderr
 
 #ifdef VERSION_INFO
   m.attr("__version__") = VERSION_INFO;
