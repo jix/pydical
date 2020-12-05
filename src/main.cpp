@@ -163,7 +163,7 @@ PYBIND11_MODULE(pydical, m) {
     }
     self.add(0);
   });
-  cls.def("extend", [](Solver &self, py::iterable it) {
+  cls.def("add_clauses", [](Solver &self, py::iterable it) {
     for (py::iterator::reference clause : it) {
       for (py::iterator::reference lit : *clause) {
         self.add(lit.cast<int>());
